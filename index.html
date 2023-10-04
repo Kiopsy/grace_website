@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The GRACEful Website</title>
     <style>
+        html,body{
+            height:100%
+        }
+
         /* Reset some default styles for the page */
         body, h1, p {
             margin: 0;
@@ -13,14 +17,15 @@
 
         /* Set the background color for the entire page */
         body {
-            background-color: #f0f4f8;
+            background-color: #fff; /* White background */
             font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent scrollbars */
         }
 
-        /* Style the header */
+        /* Style the header with a pink background */
         .header {
-            background: linear-gradient(to bottom, #3498db, #2980b9);
-            color: #fff;
+            background: linear-gradient(to bottom, #ff85a2, #ff5773); /* Gradient of pinks */
+            color: #fff; /* Darker text color for better contrast */
             text-align: center;
             padding: 20px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -35,12 +40,20 @@
             margin-bottom: 10px;
         }
 
+        /* Center the main container and make it take up 50% of the screen */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full viewport height */
+        }
+
         /* Style the image container */
         .image-container {
             text-align: center;
             padding: 20px;
             max-width: 80%; /* Adjust the width as needed */
-            margin: 0 auto; /* Center the container horizontally */
         }
 
         /* Style the image */
@@ -50,18 +63,193 @@
             display: block; /* Remove extra space below the image */
             margin: 0 auto; /* Center the image horizontally */
         }
+
+        /* Style the list of reasons */
+        .reasons {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            text-align: center;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        /* Close button style */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        
+        .bg_heart {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+        
+        .heart {
+            position: absolute;
+            top: -50%;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -m-transform: rotate(-45deg);
+            transform: rotate(-45deg)
+        }
+        
+        .heart:before {
+            position: absolute;
+            top: -50%;
+            left: 0;
+            display: block;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 100%;
+        }
+        
+        .heart:after {
+            position: absolute;
+            top: 0;
+            right: -50%;
+            display: block;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 100%;
+        }
+        
+        @-webkit-keyframes love {
+            0%{top:110%}
+        }
+        @-moz-keyframes love {
+            0%{top:110%}
+        }
+        @-ms-keyframes love {
+            0%{top:110%}
+        }
+        @keyframes love {
+            0%{top:110%}
+        }
     </style>
+    <title>Document</title>
 </head>
 <body>
-    <header class="header">
-        <h1>The GRACEful Website</h1>
-        <p>For our most favorite Grace in the world <3</p>
-    </header>
+    <div id="header-plugin"></div>
+    <div class="bg_heart">
+        <div class="popup" id="popup">
+            <div class="popup-content">
+                <span class="close-button" onclick="closePopup()">&times;</span>
+                <h2>Welcome to The GRACEful Website</h2>
+                <p>For our beloved Grace, a dining hall worker at Harvard's Eliot House.</p>
+            </div>
+        </div>
     
-    <!-- Image Container -->
-    <div class="image-container">
-        <!-- Replace 'your-image.jpg' with the actual image filename and path -->
-        <img class="image" src="docs/assets/grace.jpg" alt="Your Image">
+        <!-- Header -->
+        <header class="header">
+            <h1>The GRACEful Website</h1>
+            <div class="heart-container">
+                <!-- Heart animations -->
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+            </div>
+        </header>
+        
+        <main>
+            <!-- Image Container -->
+            <div class="image-container">
+                <!-- Replace 'your-image.jpg' with the actual image filename and path -->
+                <img class="image" src="docs/assets/grace.jpg" alt="Your Image">
+            </div>
+    
+            <!-- List of reasons why we love Grace -->
+            <div class="reasons">
+                <h3>Why We Love Grace:</h3>
+                <ul>
+                    <li>She is incredibly nice.</li>
+                    <li>Her sweetness brightens our day.</li>
+                    <li>She serves with a warm smile at the front of the dining hall.</li>
+                    <li>Her kindness and dedication make the Eliot House experience special.</li>
+                </ul>
+            </div>
+        </main>
     </div>
+    <script>
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Display the popup when the page loads
+        window.onload = function() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        // Define a function that creates a heart element with random properties
+       function createHeart() {
+           const heart = document.createElement('div');
+           heart.classList.add('heart');
+           heart.style.width = `${Math.floor(Math.random() * 65) + 10}px`;
+           heart.style.height = heart.style.width;
+           heart.style.left = `${Math.floor(Math.random() * 100) + 1}%`;
+           heart.style.background = `rgba(255, ${Math.floor(Math.random() * 25) + 100 - 25}, ${Math.floor(Math.random() * 25) + 100}, 1)`;
+           const duration = Math.floor(Math.random() * 5) + 5;
+           heart.style.animation = `love ${duration}s ease`;
+           return heart;
+       }
+       
+       // Get the container element where the hearts will be added
+       const container = document.querySelector('.bg_heart');
+       
+       // Define a function that removes hearts that have gone off screen
+       function removeHearts() {
+           const hearts = container.querySelectorAll('.heart');
+           hearts.forEach((heart) => {
+           const top = parseFloat(getComputedStyle(heart).getPropertyValue('top'));
+           const width = parseFloat(getComputedStyle(heart).getPropertyValue('width'));
+           if (top <= -100 || width >= 150) {
+               heart.remove();
+           }
+           });
+       }
+       
+       // Define a function that repeatedly adds hearts to the container
+       function addHeart() {
+           const heart1 = createHeart();
+           const heart2 = createHeart();
+           container.appendChild(heart1);
+           container.appendChild(heart2);
+           setTimeout(removeHearts, 1000);
+       }
+       
+       // Start the animation loop
+       const love = setInterval(addHeart, 500);
+   </script>
 </body>
 </html>
